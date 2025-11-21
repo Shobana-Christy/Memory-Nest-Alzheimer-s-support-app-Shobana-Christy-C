@@ -3,8 +3,8 @@ import Tile from "../../common/Tile";
 import { useEffect, useState } from "react";
 import LoadingPage from "../LoadingPage";
 import Reminder from "./reminder";
-import Button from "../../common/Button";
 import { FaTrash } from "react-icons/fa";
+import ReminderForm from "./ReminderForm";
 
 
 const RemindersPage = ({ isLoading, reminders }) => {
@@ -18,35 +18,25 @@ const RemindersPage = ({ isLoading, reminders }) => {
         recurring: false,
         notes: null
     };
-    let [form, setForm] = useState(initialReminderData);
+
     let [reminder, setReminder] = useState(initialReminderData);
 
-    const handleChange = (event) => {
-        const element = event.target;
-        const elementName = element.name;
-        const elementValue = element.value;
-        let copyForm = { ...form };
-        copyForm[elementName] = elementValue;
-        setForm(copyForm);
-    };
-
-    const handleSave = (event) => {
-        event.preventDefault();
+    const handleSave = (newOrUpdatedReminder) => {
+        const {name, date, time, recurring, notes} = {...newOrUpdatedReminder};
         if (reminder.name) { // means reminder is not having initial values null
             let localRemindersList = [...remindersList];
             let reminderToUpdate = localRemindersList.find(r => r.id == reminder.id);
-            reminderToUpdate.name = form.name;
-            reminderToUpdate.date = form.date;
-            reminderToUpdate.time = form.time;
-            reminderToUpdate.recurring = form.recurring;
-            reminderToUpdate.notes = form.notes;
+            reminderToUpdate.name = name;
+            reminderToUpdate.date = date;
+            reminderToUpdate.time = time;
+            reminderToUpdate.recurring = recurring;
+            reminderToUpdate.notes = notes;
             setRemindersList(localRemindersList);
         } else {
             const id = Date.now();
-            const newReminder = new Reminder(id, form.name, form.date, form.time, form.recurring, form.notes);
+            const newReminder = new Reminder(id, name, date, time, recurring, notes);
             setRemindersList([...remindersList, newReminder]);
         }
-        setForm(initialReminderData);
         setShowAddEditReminder(false);
     };
 
@@ -54,7 +44,6 @@ const RemindersPage = ({ isLoading, reminders }) => {
         const reminder = remindersList.find(reminder => reminder.id == reminderId);
         setShowAddEditReminder(true);
         setReminder(reminder);
-        setForm({ ...reminder });
     }
 
     const toggleReminder = () => {
@@ -62,10 +51,6 @@ const RemindersPage = ({ isLoading, reminders }) => {
         if (!showAddEditReminder) {
             setReminder(initialReminderData);
         }
-    }
-
-    const getDateForInput = (date) => {
-        return date ? date.replaceAll("/", "-") : null;
     }
 
     const handleDelete = (event, reminderId) => {
@@ -110,7 +95,10 @@ const RemindersPage = ({ isLoading, reminders }) => {
                                         <p>{reminder.notes}</p>
                                     </div>
                                     <div className="reminder-action">
-                                        <button name="delete" className="reminder-delete-icon" onClick={(event) => handleDelete(event, reminder.id)}><FaTrash/>
+                                        <button name="delete"
+                                            className="reminder-delete-icon"
+                                            onClick={(event) => handleDelete(event, reminder.id)}>
+                                            <FaTrash />
                                         </button>
                                     </div>
                                 </Tile>
@@ -123,18 +111,7 @@ const RemindersPage = ({ isLoading, reminders }) => {
 
             {
                 (showAddEditReminder) &&
-                (<div className="mask-layer">
-                    <div className="popup-container">
-                        <h4>{reminder.name ? "Edit" : "Add"} Reminder</h4>
-                        <input type="text" name="name" placeholder="Name" onChange={handleChange} value={form.name || ""} />
-                        <input type="date" name="date" placeholder="Date" onChange={handleChange} value={getDateForInput(form.date || "")} />
-                        <input type="time" name="time" placeholder="Time" onChange={handleChange} value={form.time || ""} />
-                        <textarea name="notes" rows={5} placeholder="Notes" onChange={handleChange} value={form.notes || ""} ></textarea>
-                        <Button type="submit" onClick={handleSave} label={"Save"}></Button>
-                        <Button onClick={toggleReminder} label={"Cancel"}></Button>
-                    </div>
-                </div>)
-
+                <ReminderForm reminder={reminder} onClose={toggleReminder} onSave={handleSave}/>
             }
 
         </main>
