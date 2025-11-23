@@ -10,7 +10,7 @@ import RemindersPage from './components/pages/reminders/RemindersPage'
 import MemorySpotPage from './components/pages/memoryspot/MemorySpotPage'
 import EngagementCenterPage from './components/pages/engagementcenter/EngagementCenterPage'
 import { useEffect, useState } from 'react'
-import { fetchAlbums, fetchReminders } from './dataCollection'
+import { fetchAlbums, fetchReminders } from './components/common/dataCollection'
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
