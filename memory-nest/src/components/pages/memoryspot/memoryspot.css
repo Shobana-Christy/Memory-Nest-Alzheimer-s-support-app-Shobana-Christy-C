@@ -8,6 +8,7 @@
 
 .memoryspot-container {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .memoryspot-container h3 {

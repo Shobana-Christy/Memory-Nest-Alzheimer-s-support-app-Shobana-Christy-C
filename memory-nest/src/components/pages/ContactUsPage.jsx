@@ -78,7 +78,7 @@ const ContactUsPage = () => {
                             />
                             <InputErrorMessage
                                 hasError={hasErrors && data.firstName === ''}
-                                msg={errorMessage['firstNameRequired']}
+                                message={errorMessage['firstNameRequired']}
                             />
                         </FormItem>
                     </td>
@@ -93,7 +93,7 @@ const ContactUsPage = () => {
                             />
                             <InputErrorMessage
                                 hasError={hasErrors && data.lastName === ''}
-                                msg={errorMessage['lastNameRequired']}
+                                message={errorMessage['lastNameRequired']}
                             />
                         </FormItem>
                     </td>
@@ -108,7 +108,7 @@ const ContactUsPage = () => {
                             />
                             <InputErrorMessage
                                 hasError={hasErrors && data.email === ''}
-                                msg={errorMessage['emailRequired']}
+                                message={errorMessage['emailRequired']}
                             />
                         </FormItem>
                     </td>
@@ -124,7 +124,7 @@ const ContactUsPage = () => {
                             />
                             <InputErrorMessage
                                 hasError={hasErrors && data.message === ''}
-                                msg={errorMessage['messageRequired']}
+                                message={errorMessage['messageRequired']}
                             />
                         </FormItem>
                     </td>

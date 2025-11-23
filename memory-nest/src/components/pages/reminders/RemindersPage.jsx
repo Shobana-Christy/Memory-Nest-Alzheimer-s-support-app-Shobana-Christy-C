@@ -15,26 +15,24 @@ const RemindersPage = ({ isLoading, reminders }) => {
         name: null,
         date: null,
         time: null,
-        recurring: false,
         notes: null
     };
 
     let [reminder, setReminder] = useState(initialReminderData);
 
     const handleSave = (newOrUpdatedReminder) => {
-        const {name, date, time, recurring, notes} = {...newOrUpdatedReminder};
+        const {name, date, time, notes} = {...newOrUpdatedReminder};
         if (reminder.name) { // means reminder is not having initial values null
             let localRemindersList = [...remindersList];
             let reminderToUpdate = localRemindersList.find(r => r.id == reminder.id);
             reminderToUpdate.name = name;
             reminderToUpdate.date = date;
             reminderToUpdate.time = time;
-            reminderToUpdate.recurring = recurring;
             reminderToUpdate.notes = notes;
             setRemindersList(localRemindersList);
         } else {
             const id = Date.now();
-            const newReminder = new Reminder(id, name, date, time, recurring, notes);
+            const newReminder = new Reminder(id, name, date, time, notes);
             setRemindersList([...remindersList, newReminder]);
         }
         setShowAddEditReminder(false);

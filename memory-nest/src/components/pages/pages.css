@@ -87,7 +87,6 @@ main {
     display: flex;
 }
 
-
 .add-link{
     width:100%;
     text-align:right;
@@ -212,4 +211,10 @@ textarea:focus {
 .reminder-action {
   flex: 1;
   width: 100%;
+}
+
+p.error {
+  margin-top: 1px;
+  margin-bottom: 0;
+  color: red;
 }
