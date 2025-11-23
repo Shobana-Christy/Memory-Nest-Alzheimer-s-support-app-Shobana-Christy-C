@@ -26,8 +26,8 @@ const HomePage = () => {
             </h3>
             <div id="main-content-home">
                 {
-                    pages.map(page => (
-                        <div className="page-box">
+                    pages.map((page, index) => (
+                        <div className="page-box" key={index}>
                             <Link to={page.path} className="link">
                                 <Tile text={page.name} />
                             </Link>

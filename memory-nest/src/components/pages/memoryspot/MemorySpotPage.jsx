@@ -1,50 +1,89 @@
 import { Link } from "react-router";
 import Tile from "../../common/Tile";
 import { useState } from "react";
+import "./memoryspot.css"
+import LoadingPage from "../LoadingPage";
+import AlbumDetail from "./AlbumDetail";
 
-const MemorySpotPage = () => {
-    let [showAdd, setShowAdd] = useState(false);
+const MemorySpotPage = ({ isLoading, albums }) => {
+
+    let [selectedAlbum, setSelectedAlbum] = useState(null);
+
+    const handleEvent = (event, album) => {
+        event.preventDefault();
+        setSelectedAlbum(album);
+    }
+    const goBack = () => {
+        setSelectedAlbum(null);
+    }
+
     return (
         <main>
-            <div className="main-page-header">
-
-                <div className="sub-nav">
-                    <Link to="/home" className="link">Home</Link>
-                </div>
-
-                <h3>Memory Spot</h3>
-            </div>
-
-            <div className="add-link">
-                <a className="link" onClick={() => setShowAdd(true)} ><span>+</span>Add memory</a>
-            </div>
-
-            <div id="main-content-memory">
-                <Link className="link">
-                    <Tile text="Cherished Memory1" />
-                </Link>
-
-                <Link className="link">
-                    <Tile text="Cherished Memory2" />
-                </Link>
-            </div>
-
             {
-                showAdd &&
-                (<div className="mask-layer">
-                    <div className="popup-container">
-                        <h4>Add Memorable Pictures or music</h4>
-                        <input type="text" name="caption" placeholder="Name" />
-                        <input type="text" name="date&time" placeholder="Date and Time" />
-                        <textarea name="notes" rows={5} placeholder="Notes" ></textarea>
-                        <input type="url" name="link" placeholder="Link" pattern="https?://.*"
-                          title="Please enter a URL"></input>
-                        <button type="submit">Save</button>
-                        <button onClick={() => setShowAdd(false)}>Cancel</button>
+                !selectedAlbum &&
+                (
+                    <>
+                        <div className="main-page-header">
+
+                            <div className="sub-nav">
+                                <Link to="/home" className="link">Home</Link>
+                            </div>
+
+                            <h3>Memory Spot</h3>
+                        </div>
+
+                    </>
+
+                )
+
+            }
+            {
+                selectedAlbum &&
+                (
+                    <div className="main-page-header">
+
+                        <div className="sub-nav">
+                            <Link to="/home" className="link">Home</Link> &gt;
+                            <Link onClick={goBack}> Albums</Link> &gt; {selectedAlbum.name}
+                        </div>
+
+                        <h3>Memory Spot</h3>
                     </div>
-                </div>
                 )
             }
+            <div className="memoryspot-container">
+                {
+                    isLoading &&
+                    (<LoadingPage dataName={albums} />)
+                }
+
+                {
+                    !isLoading && albums.length == 0 &&
+                    <p><em> No album is set</em></p>
+
+                }
+
+                {
+                    !isLoading && albums.length > 0 && !selectedAlbum &&
+                    albums.map((album) => (
+                        <Link key={album.id} onClick={(event) => handleEvent(event, album)}>
+                            <Tile>
+                                <h2>
+                                    {album.name}
+                                </h2>
+                                <h3>
+                                    {album.description}
+                                </h3>
+                            </Tile>
+                        </Link>
+                    ))
+                }
+
+                {
+                    selectedAlbum && (<AlbumDetail album={selectedAlbum} />)
+                }
+            </div>
+
 
 
         </main>
