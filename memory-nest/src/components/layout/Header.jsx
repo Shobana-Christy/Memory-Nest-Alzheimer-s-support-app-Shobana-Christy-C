@@ -5,7 +5,7 @@ const Header = () => {
     return (
 
         <header className="header">
-            <img src="src/assets/images/logo.SVG" alt="Memory Nest logo" id="header-logo"/>
+            <img src="/images/logo.SVG" alt="Memory Nest logo" id="header-logo"/>
             <nav>
                 <ul className="menu">
                     <li><Link to="/contactus" className="link">Contact Us</Link> |</li>
