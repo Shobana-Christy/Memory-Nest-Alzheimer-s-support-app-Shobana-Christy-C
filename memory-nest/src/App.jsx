@@ -37,7 +37,7 @@ function App() {
       <div id="body-container">
         <Header />
         <Routes>
-          <Route path='/' element={<LoginPage />} />
+          <Route path='/' element={<HomePage />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/aboutus" element={<AboutUsPage />} />
           <Route path="/contactus" element={<ContactUsPage />} />
