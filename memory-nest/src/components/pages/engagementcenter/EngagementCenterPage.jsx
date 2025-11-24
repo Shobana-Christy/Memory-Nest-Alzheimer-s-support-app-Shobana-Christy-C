@@ -11,7 +11,7 @@ const EngagementCenterPage = () => {
         },
         {
             id: 2,
-            name: "Suduko",
+            name: "Sudoku",
             source: "https://sudoku.com/"
         },
        
