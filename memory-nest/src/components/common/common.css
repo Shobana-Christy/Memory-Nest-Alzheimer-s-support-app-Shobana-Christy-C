@@ -9,9 +9,9 @@
     justify-content: center;
     align-items: center;
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 50%; /*50% of screen height from top*/
+    left: 50%; /*50% of screen width from left*/
+    transform: translate(-50%, -50%); /* "-" shifts back, 50% of this container width and height*/
     backdrop-filter: blur(4px);
     color: blue;
     font-weight: bold;
