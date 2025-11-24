@@ -44,7 +44,6 @@ function App() {
           <Route path='/reminders' element={<RemindersPage isLoading={isLoading} reminders={reminders} />} />
           <Route path='/memoryspot' element={<MemorySpotPage isLoading={isLoading} albums={memorySpotAlbums} />} />
           <Route path='/engagementcenter' element={<EngagementCenterPage />} />
-
         </Routes>
         <Footer />
 

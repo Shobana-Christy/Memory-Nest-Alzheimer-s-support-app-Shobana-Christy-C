@@ -5,6 +5,7 @@ import FormItem from '../forms/FormItem';
 import Input from '../forms/input/Input';
 import InputErrorMessage from '../forms/input/InputErrorMessage';
 import Button from '../common/Button';
+import Alert from '../common/Alert';
 
 let initialData = {
     firstName: '',
@@ -17,21 +18,36 @@ let errorMessage = {
     firstNameRequired: 'First name is required.',
     lastNameRequired: 'Last name is required.',
     emailRequired: 'Email is required.',
+    emailNotValid: "Email is not valid.",
     messageRequired: "Message is required."
 }
 
 const ContactUsPage = () => {
     const [data, setData] = useState({ ...initialData });
     const [hasErrors, setHasErrors] = useState(false);
-
     const inputRef = useRef(null);
+    const [showAlert, setShowAlert] = useState(false);
+    const [hasEmailIdError, setHasEmailIdError] = useState(false);
+
+    useEffect(() => {
+        if(showAlert) {
+            const timer = setTimeout(() => setShowAlert(false), 1000);
+            return () => clearTimeout(timer);
+        }
+    }, [showAlert]);
 
     useEffect(() => {
         inputRef.current.focus();
     }, []);
 
+    const isValidEmail = () => {
+        const result = data.email && data.email.includes("@") && data.email.includes(".") && !data.email.startsWith("@") && !data.email.startsWith(".")  && !data.email.endsWith("@") && !data.email.startsWith(".");
+        setHasEmailIdError(!result);
+        return result;
+    }
+
     const isValid = () => {
-        return data.firstName && data.lastName && data.email && data.message;
+        return data.firstName && data.lastName && isValidEmail() && data.message;
     };
 
     const handleDataChange = (ev) => {
@@ -49,11 +65,9 @@ const ContactUsPage = () => {
         } else {
             setHasErrors(false);
             setData({ ...initialData });
-            alert("Thank you for contacting us!");
+            setShowAlert(true);
         }
-
     }
-
 
     return (
         <main>
@@ -67,6 +81,7 @@ const ContactUsPage = () => {
 
             </div>
             <table className='contactus-form-table'>
+                <tbody>
                 <tr>
                     <td>
                         <FormItem>
@@ -110,6 +125,10 @@ const ContactUsPage = () => {
                                 hasError={hasErrors && data.email === ''}
                                 message={errorMessage['emailRequired']}
                             />
+                            <InputErrorMessage
+                                hasError={hasEmailIdError}
+                                message={errorMessage['emailNotValid']}
+                            />
                         </FormItem>
                     </td>
                 </tr>
@@ -131,12 +150,17 @@ const ContactUsPage = () => {
                 </tr>
                 <tr>
                     <td>
-                        <Button id={"submit-conntact-form"} type="submit"
+                        <Button id={"submit-contact-form"} type="submit"
                             label='Submit' onClick={handleSubmit}>
                         </Button>
                     </td>
                 </tr>
+                </tbody>
             </table>
+            {
+                showAlert &&
+                (<Alert message={"Thank you for contacting us!"} />)
+            }
         </main>
     )
 }

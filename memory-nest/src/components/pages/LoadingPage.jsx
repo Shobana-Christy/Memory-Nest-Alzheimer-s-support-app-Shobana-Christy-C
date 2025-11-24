@@ -4,6 +4,7 @@ const LoadingPage = ({dataName}) => {
     return (
         <main className="main-content">
             <h1>Loading</h1>
+            <div className="spinner"></div>
             <div>Retrieving {data} from server ...</div>
         </main>
     )
