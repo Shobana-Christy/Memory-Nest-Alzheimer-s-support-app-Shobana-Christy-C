@@ -31,8 +31,9 @@ const ContactUsPage = () => {
 
     useEffect(() => {
         if(showAlert) {
+            // after 1 second, remove the success message alert
             const timer = setTimeout(() => setShowAlert(false), 1000);
-            return () => clearTimeout(timer);
+            return () => clearTimeout(timer); // clears the timeout operation
         }
     }, [showAlert]);
 
@@ -42,7 +43,7 @@ const ContactUsPage = () => {
 
     const isValidEmail = () => {
         const result = data.email && data.email.includes("@") && data.email.includes(".") && !data.email.startsWith("@") && !data.email.startsWith(".")  && !data.email.endsWith("@") && !data.email.startsWith(".");
-        setHasEmailIdError(!result);
+        setHasEmailIdError(!result); // to ensure error message is displayed
         return result;
     }
 

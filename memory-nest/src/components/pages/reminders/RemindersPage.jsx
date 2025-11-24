@@ -8,7 +8,7 @@ import ReminderForm from "./ReminderForm";
 
 
 const RemindersPage = ({ isLoading, reminders }) => {
-    let [showAddEditReminder, setShowAddEditReminder] = useState(false);
+    let [showAddEditReminder, setShowAddEditReminder] = useState(false); // show the popup form
     let [remindersList, setRemindersList] = useState(reminders);
     const initialReminderData = {
         id: null,
@@ -18,7 +18,7 @@ const RemindersPage = ({ isLoading, reminders }) => {
         notes: null
     };
 
-    let [reminder, setReminder] = useState(initialReminderData);
+    let [reminder, setReminder] = useState(initialReminderData); // to track the edit operation
 
     const handleSave = (newOrUpdatedReminder) => {
         const {name, date, time, notes} = {...newOrUpdatedReminder};

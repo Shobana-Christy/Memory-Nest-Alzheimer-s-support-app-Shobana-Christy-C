@@ -17,7 +17,6 @@ const ReminderForm = ({ reminder, onClose, onSave }) => {
         notesRequired: "Note is required"
     }
 
-
     // if reminder.name is not available, then consider it as Add reminder
     const formValues = reminder.name ? reminder : initialReminderData;
     let [form, setForm] = useState(formValues);
@@ -37,7 +36,7 @@ const ReminderForm = ({ reminder, onClose, onSave }) => {
     };
 
     const getDateForInput = (date) => {
-        return date ? date.replaceAll("/", "-") : null;
+        return date ? date.replaceAll("/", "-") : null; // <input type="date" accepts with -
     }
 
     const handleClick = (event) => {
@@ -48,7 +47,7 @@ const ReminderForm = ({ reminder, onClose, onSave }) => {
         } else {
             setHasError(false);
             setForm(initialReminderData);
-            onSave(addOrUpdatedReminder);
+            onSave(addOrUpdatedReminder); // call onSave event handler
         }
 
     }
