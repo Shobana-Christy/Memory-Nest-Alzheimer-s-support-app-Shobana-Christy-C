@@ -1,4 +1,4 @@
 [build]
-    base = “memory-nest”
-    command = “npm run build”
-    publish = “dist”
+    base = "memory-nest"
+    command = "npm run build"
+    publish = "dist"
